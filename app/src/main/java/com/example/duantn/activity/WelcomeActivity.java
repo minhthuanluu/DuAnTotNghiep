@@ -18,14 +18,14 @@ public class WelcomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_welcome);
 
 
-        boolean hasLogin = SharePreferenceUtil.getBooleanPerferences(this, Constant.HAS_LOGIN, false);
-
-        if(hasLogin){
-            goToMain();
-        }else {
-            goToLogin();
-        }
-
+//        boolean hasLogin = SharePreferenceUtil.getBooleanPerferences(this, Constant.HAS_LOGIN, false);
+//
+//        if(hasLogin){
+//            goToMain();
+//        }else {
+//            goToLogin();
+//        }
+        goToMain();
     }
 
     private void goToLogin() {
