@@ -62,10 +62,12 @@ public class LoginActivity extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 FirebaseUser fUser = fAuth.getCurrentUser();
+
                                 User u = new User();
                                 u.setId(fUser.getUid());
                                 u.setEmail(fUser.getEmail());
                                 SharePreferenceUtil.saveBooleanPereferences(LoginActivity.this, Constant.HAS_LOGIN, true);
+
                                 Toast.makeText(LoginActivity.this, Constant.HAS_LOGIN+"", Toast.LENGTH_SHORT).show();
                                 startActivity(new Intent(LoginActivity.this,MainActivity.class));
                             } else {
