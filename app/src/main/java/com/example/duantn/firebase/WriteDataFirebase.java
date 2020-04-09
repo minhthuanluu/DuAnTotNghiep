@@ -6,6 +6,7 @@ import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.duantn.activity.model.Product;
 import com.example.duantn.util.Constant;
 import com.google.android.gms.tasks.Continuation;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -22,34 +23,34 @@ import java.io.ByteArrayOutputStream;
 public class WriteDataFirebase {
     public static final String TAG = "writeDataFirebase";
 
-//    public static void addFood(Food food, MyFirebase.TaskListener listerner){
-//        MyFirebase.data.child(Constant.TITLE_FOOD_NODE).push().setValue(food, new DatabaseReference.CompletionListener() {
-//            @Override
-//            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
-//                if(databaseReference == null){
-//                    listerner.fail(databaseError.getDetails());
-//                }else {
-//                    listerner.success();
-//                }
-//            }
-//        });
-//    }
+    public static void addProduct(Product product, final TaskListener listerner){
+        MyFirebase.data.child("product").push().setValue(product, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError databaseError, @NonNull DatabaseReference databaseReference) {
+                if(databaseReference == null){
+                    listerner.fail(databaseError.getDetails());
+                }else {
+                    listerner.success();
+                }
+            }
+        });
+    }
 //
-//    public static void editFood(Food food, MyFirebase.TaskListener listener){
-//        MyFirebase.data.child(Constant.TITLE_FOOD_NODE).child(food.key).setValue(food)
-//                .addOnSuccessListener(new OnSuccessListener<Void>() {
-//                    @Override
-//                    public void onSuccess(Void aVoid) {
-//                        listener.success();
-//                    }
-//                })
-//                .addOnFailureListener(new OnFailureListener() {
-//                    @Override
-//                    public void onFailure(@NonNull Exception e) {
-//                        listener.fail(e.toString());
-//                    }
-//                });
-//    }
+    public static void editProduct(Product product, final TaskListener listener){
+        MyFirebase.data.child("product").child(product.key).setValue(product)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        listener.success();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        listener.fail(e.toString());
+                    }
+                });
+    }
 //
 //    public static void addBill(Bill bill, MyFirebase.TaskListener listerner){
 //        MyFirebase.data.child(Constant.TITLE_BILL).push().setValue(bill, new DatabaseReference.CompletionListener() {
@@ -110,21 +111,26 @@ public class WriteDataFirebase {
 //        });
 //    }
 //
-//    public static void deleteFood(Food food, MyFirebase.TaskListener listener){
-//        MyFirebase.data.child(Constant.TITLE_FOOD_NODE).child(food.key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Void> task) {
-//                if(task.isSuccessful()){
-//                    listener.success();
-//                }else {
-//                    listener.fail("can't delete this food now, try latter!");
-//                }
-//            }
-//        });
-//    }
+    public static void deleteProduct(Product product, final TaskListener listener){
+        MyFirebase.data.child("product").child(product.key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    listener.success();
+                }else {
+                    listener.fail("can't delete this food now, try latter!");
+                }
+            }
+        });
+    }
 //
 //    public interface UploadListener{
 //        void success(String path);
 //        void fail(String error);
 //    }
+
+    public interface TaskListener{
+        void success();
+        void fail(String e);
+    }
 }

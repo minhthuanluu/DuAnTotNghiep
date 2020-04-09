@@ -6,9 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.duantn.R;
+import com.example.duantn.activity.model.User;
+import com.example.duantn.firebase.MyFirebase;
 import com.example.duantn.fragment.ChatFragment;
 import com.example.duantn.fragment.HomeFragment;
 import com.example.duantn.fragment.PostFragment;
@@ -29,6 +34,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentTransaction fr1 = getSupportFragmentManager().beginTransaction();
         fr1.replace(R.id.content, fr, "");
         fr1.commit();
+        getCurrentUser();
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener selectedListener =
@@ -69,4 +75,19 @@ public class MainActivity extends AppCompatActivity {
                     return false;
                 }
             };
+
+    private void getCurrentUser() {
+        String email = "test";
+        MyFirebase.getUserByEmail(email, new MyFirebase.TaskListener() {
+            @Override
+            public void fail(String error) {
+                Log.i("TAG", "fail: ");
+            }
+
+            @Override
+            public void success(User user) {
+                User.currentUser = user;
+            }
+        });
+    }
 }
