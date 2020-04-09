@@ -57,6 +57,7 @@
                 android:hint="Mật Khẩu" />
 
             <ImageView
+                android:id="@+id/iv_showpass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/et_pass"
@@ -82,7 +83,7 @@
                 android:padding="10dp" />
 
             <ImageView
-                android:id="@+id/iv_showpass"
+                android:id="@+id/iv_reshowpass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/et_repass"
@@ -92,7 +93,7 @@
                 android:src="@drawable/ic_eye" />
         </RelativeLayout>
         <Button
-            android:id="@+id/bt_login"
+            android:id="@+id/bt_reg"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_marginTop="20dp"
@@ -112,7 +113,7 @@
                 android:layout_height="wrap_content"
                 android:text="Bạn đã có tài khoản?  "/>
             <TextView
-                android:id="@+id/tv_gotoDangky"
+                android:id="@+id/tv_gotoLogin"
                 android:layout_gravity="center_horizontal"
                 android:textColor="@color/colorPrimary"
                 android:layout_width="wrap_content"

@@ -205,4 +205,14 @@
         android:text="Cài đặt"
         android:textSize="14dp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/bt_login"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_margin="20dp"
+        android:textColor="#fff"
+        android:textSize="18dp"
+        android:background="@drawable/button_shape"
+        android:text="Đăng Xuất" />
 </LinearLayout>
