@@ -1,4 +1,4 @@
-package com.example.duantn;
+package com.example.duantn.activity;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
@@ -8,6 +8,11 @@ import androidx.fragment.app.FragmentTransaction;
 import android.os.Bundle;
 import android.view.MenuItem;
 
+import com.example.duantn.R;
+import com.example.duantn.fragment.ChatFragment;
+import com.example.duantn.fragment.HomeFragment;
+import com.example.duantn.fragment.PostFragment;
+import com.example.duantn.fragment.ProfileFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class MainActivity extends AppCompatActivity {

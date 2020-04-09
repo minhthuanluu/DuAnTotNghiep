@@ -1,14 +1,16 @@
-package com.example.duantn;
+package com.example.duantn.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class RecoveryPasswordActivity extends AppCompatActivity {
+import com.example.duantn.R;
+
+public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_recovery_password);
+        setContentView(R.layout.activity_login);
     }
 }

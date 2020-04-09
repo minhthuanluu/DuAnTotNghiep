@@ -7,7 +7,7 @@
     android:background="@drawable/bg_welcome"
     android:gravity="center"
     android:orientation="vertical"
-    tools:context=".WelcomeActivity">
+    tools:context=".activity.WelcomeActivity">
 
     <ImageView
         android:layout_width="wrap_content"

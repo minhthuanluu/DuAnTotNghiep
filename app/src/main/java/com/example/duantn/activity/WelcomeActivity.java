@@ -1,10 +1,12 @@
-package com.example.duantn;
+package com.example.duantn.activity;
 
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+
+import com.example.duantn.R;
 
 public class WelcomeActivity extends AppCompatActivity {
 
@@ -17,7 +19,7 @@ public class WelcomeActivity extends AppCompatActivity {
         new android.os.Handler().postDelayed(
                 new Runnable() {
                     public void run() {
-                        startActivity(new Intent(WelcomeActivity.this,MainActivity.class));
+                        startActivity(new Intent(WelcomeActivity.this, MainActivity.class));
                     }
                 },
                 1000);
