@@ -10,9 +10,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
 
 public class ReadDataFirebase {
-    public static void listenerProductChange(ChildEventListener listener){
-        MyFirebase.data.child("product").addChildEventListener(listener);
-    }
+//    public static void listenerFoodChange(ChildEventListener listener){
+//        MyFirebase.data.child(Constant.TITLE_FOOD_NODE).addChildEventListener(listener);
+//    }
 //
 //    public static void listenerBillChange(ChildEventListener listener){
 //        MyFirebase.data.child(Constant.TITLE_BILL).addChildEventListener(listener);

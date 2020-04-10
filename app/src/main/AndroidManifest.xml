@@ -14,7 +14,6 @@
         android:theme="@style/AppTheme">
         <activity android:name=".activity.RecoveryPasswordActivity"></activity>
         <activity android:name=".activity.RegisterActivity" />
-        <activity android:name=".activity.AddProductActivity" />
         <activity android:name=".activity.LoginActivity" >
         </activity>
         <activity android:name=".activity.WelcomeActivity">

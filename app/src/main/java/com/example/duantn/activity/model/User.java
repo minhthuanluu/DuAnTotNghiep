@@ -1,8 +1,6 @@
 package com.example.duantn.activity.model;
 
 public class User {
-    public static User currentUser = null;
-
     private String id;
     private String email;
     private String password;
