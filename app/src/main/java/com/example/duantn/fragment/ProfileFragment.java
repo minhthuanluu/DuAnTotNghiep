@@ -1,5 +1,6 @@
 package com.example.duantn.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,13 +11,17 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.duantn.R;
+import com.example.duantn.activity.LoginActivity;
+import com.example.duantn.activity.WelcomeActivity;
 import com.example.duantn.activity.model.User;
 import com.example.duantn.firebase.MyFirebase;
-import com.squareup.picasso.Picasso;
+import com.example.duantn.util.Constant;
+import com.example.duantn.util.SharePreferenceUtil;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -26,7 +31,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class ProfileFragment extends Fragment {
 
-
+    User currentUser;
+    Button bt_logout;
     CircleImageView imvAvatar;
     TextView tvName, tvAddress;
 
@@ -43,15 +49,44 @@ public class ProfileFragment extends Fragment {
         imvAvatar = view.findViewById(R.id.profile_image);
         tvName = view.findViewById(R.id.tvName);
         tvAddress = view.findViewById(R.id.tvAddress);
-        setUpInfo();
+        bt_logout = view.findViewById(R.id.bt_logout);
+        getCurrentUser();
+
+        bt_logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                currentUser = null;
+            }
+        });
+
         return view;
     }
 
+    private void getCurrentUser() {
+        String email = "test";
+        MyFirebase.getUserByEmail(email, new MyFirebase.TaskListener() {
+            @Override
+            public void fail(String error) {
+                Log.i("TAG", "fail: ");
+            }
+
+            @Override
+            public void success(User user) {
+                currentUser = user;
+
+                new Handler(Looper.getMainLooper()).post(new Runnable() {
+                    @Override
+                    public void run() {
+                        setUpInfo();
+                    }
+                });
+            }
+        });
+    }
 
     private void setUpInfo() {
-        tvName.setText(User.currentUser.getEmail());
-        tvAddress.setText(User.currentUser.getAddress());
-
-        Picasso.with(getContext()).load(User.currentUser.getAvatar()).into(imvAvatar);
+        tvName.setText(currentUser.getEmail());
+        tvAddress.setText(currentUser.getAddress());
     }
+
 }

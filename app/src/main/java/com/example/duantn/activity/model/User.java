@@ -1,14 +1,12 @@
 package com.example.duantn.activity.model;
 
-import java.util.Date;
-
 public class User {
     public static User currentUser = null;
 
     private String id;
     private String email;
     private String password;
-    private Date birthday;
+    private String birthday;
     private String avatar;
     private String indetifyCard;
     private String phoneNumber;
@@ -18,7 +16,7 @@ public class User {
     public User() {
     }
 
-    public User(String email, String password, Date birthday, String avatar, String indetifyCard, String phoneNumber, String address, String status) {
+    public User(String email, String password, String birthday, String avatar, String indetifyCard, String phoneNumber, String address, String status) {
         this.email = email;
         this.password = password;
         this.birthday = birthday;
@@ -27,6 +25,12 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.address = address;
         this.status = status;
+    }
+
+    public User(String email, String password, String phoneNumber) {
+        this.email = email;
+        this.password = password;
+        this.phoneNumber = phoneNumber;
     }
 
     public String getId() {
@@ -53,11 +57,11 @@ public class User {
         this.password = password;
     }
 
-    public Date getBirthday() {
+    public String getBirthday() {
         return birthday;
     }
 
-    public void setBirthday(Date birthday) {
+    public void setBirthday(String birthday) {
         this.birthday = birthday;
     }
 

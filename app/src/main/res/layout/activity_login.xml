@@ -28,6 +28,7 @@
             android:background="@drawable/edittext_shape"
             android:padding="15dp"
             android:ems="10"
+            android:text="minhthuan.luu@gmail.com"
             android:inputType="textPersonName"
             android:hint="Email" />
 
@@ -43,6 +44,7 @@
                 android:padding="10dp"
                 android:ems="10"
                 android:inputType="textPassword"
+                android:text="minhthuan801"
                 android:hint="Mật Khẩu" />
 
             <ImageView
