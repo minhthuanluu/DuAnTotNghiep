@@ -55,11 +55,21 @@ public class ProfileFragment extends Fragment {
         bt_logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                currentUser = null;
+                boolean hasLogin = SharePreferenceUtil.getBooleanPerferences(getContext(), Constant.HAS_LOGIN, false);
+
+                if(hasLogin){
+                    goToMain();
+                }else {
+
+                }
             }
         });
 
         return view;
+    }
+
+    private void goToMain() {
+        startActivity(new Intent(getContext(),LoginActivity.class));
     }
 
     private void getCurrentUser() {

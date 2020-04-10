@@ -73,6 +73,10 @@ public class MyFirebase {
         data.child("user").push().setValue(user, listner);
     }
 
+    public static void logout(){
+        getUserLogin().setStatus("false");
+    }
+
     public static User getUserLogin(){
         return userLog;
     }

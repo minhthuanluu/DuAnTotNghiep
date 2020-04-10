@@ -3,6 +3,7 @@ package com.example.duantn.activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.ProgressDialog;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Patterns;
@@ -33,6 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     Button bt_reg;
     ImageView iv_showpass,iv_reshowpass;
     TextView tv_gotoLogin;
+    ProgressDialog pd;
     FirebaseAuth fAuth;
     String email,phone,pass,birthday,avatar,indentifyCard,address,status;
     @Override
@@ -40,6 +42,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
+        onClick();
     }
 
     private void init(){
@@ -87,11 +90,12 @@ public class RegisterActivity extends AppCompatActivity {
                         hashMap.put("phone", user.getPhoneNumber());
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("user");
-                        ref.child(email).setValue(hashMap)
+                        ref.child("null").setValue(hashMap)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                        Toast.makeText(RegisterActivity.this, "Thêm user thành công!", Toast.LENGTH_SHORT).show();
+
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

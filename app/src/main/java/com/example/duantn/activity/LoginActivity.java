@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.duantn.R;
@@ -25,6 +26,7 @@ public class LoginActivity extends AppCompatActivity {
     EditText et_email,et_pass;
     Button bt_login;
     FirebaseAuth fAuth;
+    TextView tv_gotoDangky;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +39,7 @@ public class LoginActivity extends AppCompatActivity {
         et_email = findViewById(R.id.et_email);
         et_pass = findViewById(R.id.et_pass);
         bt_login = findViewById(R.id.bt_login);
+        tv_gotoDangky = findViewById(R.id.tv_gotoDangky);
         fAuth = FirebaseAuth.getInstance();
     }
 
@@ -47,6 +50,13 @@ public class LoginActivity extends AppCompatActivity {
                 String email = et_email.getText().toString();
                 String pass = et_pass.getText().toString();
                 UserLogin(email,pass);
+            }
+        });
+
+        tv_gotoDangky.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(LoginActivity.this,RegisterActivity.class));
             }
         });
     }
