@@ -123,6 +123,8 @@ public class AddProductActivity extends AppCompatActivity {
         final Product product = new Product(name, category, productEdit.getImageLink(), price, des, status, User.currentUser.getEmail());
         product.key = productEdit.key;
 
+
+        // Nếu bitmap bị null thì sẽ lấy link củ của product, còn nếu có bitmap thì upload lên sau đó lấy link đó add vào firebase
         if(currentBitmap == null){
             WriteDataFirebase.editProduct(product, new WriteDataFirebase.TaskListener() {
                 @Override
