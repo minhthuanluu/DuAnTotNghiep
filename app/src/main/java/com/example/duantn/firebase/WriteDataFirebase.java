@@ -81,35 +81,35 @@ public class WriteDataFirebase {
 //                });
 //    }
 //
-//    public static void uploadImage(Bitmap bitmap, String title, UploadListener uploadListener){
-//        StorageReference storageRef = MyFirebase.storage.getReference();
-//        StorageReference mountainsRef = storageRef.child(title);
-//
-//        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-//        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-//        byte[] data = baos.toByteArray();
-//
-//        UploadTask uploadTask = mountainsRef.putBytes(data);
-//        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
-//            @Override
-//            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
-//                if (!task.isSuccessful()) {
-//                    throw task.getException();
-//                }
-//                return mountainsRef.getDownloadUrl();
-//            }
-//        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
-//            @Override
-//            public void onComplete(@NonNull Task<Uri> task) {
-//                if (task.isSuccessful()) {
-//                    Uri downloadUri = task.getResult();
-//                    uploadListener.success(downloadUri.toString());
-//                } else {
-//                    uploadListener.fail("error, try again");
-//                }
-//            }
-//        });
-//    }
+    public static void uploadImage(Bitmap bitmap, String title, final UploadListener uploadListener){
+        StorageReference storageRef = MyFirebase.storage.getReference();
+        final StorageReference mountainsRef = storageRef.child(title);
+
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] data = baos.toByteArray();
+
+        UploadTask uploadTask = mountainsRef.putBytes(data);
+        uploadTask.continueWithTask(new Continuation<UploadTask.TaskSnapshot, Task<Uri>>() {
+            @Override
+            public Task<Uri> then(@NonNull Task<UploadTask.TaskSnapshot> task) throws Exception {
+                if (!task.isSuccessful()) {
+                    throw task.getException();
+                }
+                return mountainsRef.getDownloadUrl();
+            }
+        }).addOnCompleteListener(new OnCompleteListener<Uri>() {
+            @Override
+            public void onComplete(@NonNull Task<Uri> task) {
+                if (task.isSuccessful()) {
+                    Uri downloadUri = task.getResult();
+                    uploadListener.success(downloadUri.toString());
+                } else {
+                    uploadListener.fail("error, try again");
+                }
+            }
+        });
+    }
 //
     public static void deleteProduct(Product product, final TaskListener listener){
         MyFirebase.data.child("product").child(product.key).removeValue().addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -124,10 +124,10 @@ public class WriteDataFirebase {
         });
     }
 //
-//    public interface UploadListener{
-//        void success(String path);
-//        void fail(String error);
-//    }
+    public interface UploadListener{
+        void success(String path);
+        void fail(String error);
+    }
 
     public interface TaskListener{
         void success();

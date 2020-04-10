@@ -1,5 +1,6 @@
 package com.example.duantn.adapter;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duantn.R;
 import com.example.duantn.activity.model.Product;
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
@@ -20,6 +22,7 @@ import java.util.List;
 public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHolder> {
     List<Product> productList;
     ProductListener productListener;
+    Context context;
 
     public ProductAdapter(List<Product> list){
         this.productList = list;
@@ -27,6 +30,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        context = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, null, false);
         return new ViewHolder(view);
     }
@@ -39,7 +43,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Product product = productList.get(position);
         holder.tvName.setText(product.getName());
-
+        Picasso.with(context).load(product.getImageLink()).into(holder.imv);
         if(productListener != null){
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
                 @Override
