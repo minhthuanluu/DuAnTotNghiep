@@ -8,10 +8,14 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,24 +23,36 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.duantn.R;
+import com.example.duantn.activity.model.Category;
 import com.example.duantn.activity.model.Product;
-import com.example.duantn.activity.model.User;
 import com.example.duantn.firebase.WriteDataFirebase;
+import com.example.duantn.fragment.HomeFragment;
+import com.example.duantn.fragment.PostFragment;
 import com.example.duantn.util.FilePathUtils;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.auth.User;
 import com.squareup.picasso.Picasso;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import permissions.dispatcher.NeedsPermission;
 import permissions.dispatcher.RuntimePermissions;
 
 @RuntimePermissions
 public class AddProductActivity extends AppCompatActivity {
-    ImageView imv;
+    ImageView imv,iv_back;
     EditText edName, edCategory, edPrice, edDescription, edStatus;
 
     Button btnAdd;
     private Product productEdit;
     boolean isEdit = false;
-
+    FirebaseAuth fAuth;
     Bitmap currentBitmap;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -54,8 +70,16 @@ public class AddProductActivity extends AppCompatActivity {
         edDescription = findViewById(R.id.edDescription);
         edStatus = findViewById(R.id.edStatus);
         imv = findViewById(R.id.imv);
-
+        fAuth = FirebaseAuth.getInstance();
         btnAdd = findViewById(R.id.btnAdd);
+        iv_back = findViewById(R.id.iv_back);
+
+        iv_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(AddProductActivity.this,MainActivity.class));
+            }
+        });
 
         imv.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -63,7 +87,7 @@ public class AddProductActivity extends AppCompatActivity {
                 AddProductActivityPermissionsDispatcher.openGalleryWithPermissionCheck(AddProductActivity.this);
             }
         });
-        
+
         btnAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -120,7 +144,7 @@ public class AddProductActivity extends AppCompatActivity {
         final double price = Double.parseDouble(edPrice.getText().toString());
         final String des = edDescription.getText().toString();
         final String status = edStatus.getText().toString();
-        final Product product = new Product(name, category, productEdit.getImageLink(), price, des, status, User.currentUser.getEmail());
+        final Product product = new Product(name, category, productEdit.getImageLink(), price, des, status, fAuth.getCurrentUser().getEmail());
         product.key = productEdit.key;
 
 
@@ -152,7 +176,7 @@ public class AddProductActivity extends AppCompatActivity {
             WriteDataFirebase.uploadImage(currentBitmap, name, new WriteDataFirebase.UploadListener() {
                 @Override
                 public void success(String path) {
-                    Product product = new Product(name, category, path, price, des, status, User.currentUser.getEmail());
+                    Product product = new Product(name, category, path, price, des, status, fAuth.getCurrentUser().getEmail());
                     product.key = productEdit.key;
                     WriteDataFirebase.editProduct(product, new WriteDataFirebase.TaskListener() {
                         @Override
@@ -199,7 +223,7 @@ public class AddProductActivity extends AppCompatActivity {
         WriteDataFirebase.uploadImage(currentBitmap, name, new WriteDataFirebase.UploadListener() {
             @Override
             public void success(String path) {
-                Product product = new Product(name, category, path, price, des, status, User.currentUser.getEmail());
+                Product product = new Product(name, category, path, price, des, status, fAuth.getCurrentUser().getEmail());
                 WriteDataFirebase.addProduct(product, new WriteDataFirebase.TaskListener() {
                     @Override
                     public void success() {

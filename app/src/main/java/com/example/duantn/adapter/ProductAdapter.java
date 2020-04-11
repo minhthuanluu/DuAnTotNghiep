@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.duantn.R;
 import com.example.duantn.activity.model.Product;
+import com.google.firebase.database.FirebaseDatabase;
 import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
@@ -23,6 +24,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     List<Product> productList;
     ProductListener productListener;
     Context context;
+
 
     public ProductAdapter(List<Product> list){
         this.productList = list;
@@ -43,6 +45,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public void onBindViewHolder(@NonNull ViewHolder holder, final int position) {
         Product product = productList.get(position);
         holder.tvName.setText(product.getName());
+        holder.tv_description.setText(product.getDescription());
         Picasso.with(context).load(product.getImageLink()).into(holder.imv);
         if(productListener != null){
             holder.btnEdit.setOnClickListener(new View.OnClickListener() {
@@ -69,12 +72,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ViewHold
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView imv;
         TextView tvName;
-
+        TextView tv_description;
         Button btnDelete, btnEdit;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             imv = itemView.findViewById(R.id.imv);
             tvName = itemView.findViewById(R.id.tvName);
+            tv_description = itemView.findViewById(R.id.tv_description);
             btnDelete = itemView.findViewById(R.id.btnDelete);
             btnEdit = itemView.findViewById(R.id.btnEdit);
         }

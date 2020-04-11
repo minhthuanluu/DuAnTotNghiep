@@ -6,11 +6,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.media.Image;
 import android.os.Bundle;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
 import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -36,13 +39,27 @@ public class RegisterActivity extends AppCompatActivity {
     TextView tv_gotoLogin;
     ProgressDialog pd;
     FirebaseAuth fAuth;
-    String email,phone,pass,birthday,avatar,indentifyCard,address,status;
+    boolean showPass;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
         init();
         onClick();
+
+    }
+
+    private void checkDuplicatePass() {
+        String repass = et_repass.getText().toString();
+        String email = et_email.getText().toString();
+        String phone = et_phone.getText().toString();
+        String pass = et_pass.getText().toString();
+        if(pass.equals(repass)){
+            registryUser(email,pass,phone);
+        }else{
+            Toast.makeText(this, "Mật khẩu chưa trùng khớp", Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void init(){
@@ -53,6 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
         tv_gotoLogin = findViewById(R.id.tv_gotoLogin);
         iv_showpass = findViewById(R.id.iv_showpass);
         iv_reshowpass = findViewById(R.id.iv_reshowpass);
+        pd = new ProgressDialog(RegisterActivity.this);
         bt_reg = findViewById(R.id.bt_reg);
         fAuth = FirebaseAuth.getInstance();
     }
@@ -61,26 +79,55 @@ public class RegisterActivity extends AppCompatActivity {
         bt_reg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = et_email.getText().toString();
-                String phone = et_phone.getText().toString();
-                String pass = et_pass.getText().toString();
-                registryUser(email,pass,phone);
+
+                checkDuplicatePass();
+
+            }
+        });
+        iv_showpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPass = !showPass;
+                PasswordStatus(et_pass,iv_showpass);
+            }
+        });
+        iv_reshowpass.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPass = !showPass;
+                PasswordStatus(et_repass,iv_reshowpass);
             }
         });
     }
 
+
+    private void PasswordStatus(EditText et_pass,ImageView iv_showpass) {
+        if(showPass==true){
+            et_pass.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+            iv_showpass.setImageResource(R.drawable.ic_hidepass);
+        }else{
+            et_pass.setTransformationMethod(PasswordTransformationMethod.getInstance());
+            iv_showpass.setImageResource(R.drawable.ic_eye);
+        }
+
+    }
+
     private void registryUser(final String email, final String pass, final String phone) {
         if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
-            et_email.setError("Sai định dạng mail!");
+            Toast.makeText(this, "Sai định dạng mail!", Toast.LENGTH_SHORT).show();
             et_email.setFocusable(true);
         }else if(pass.length() < 6){
-            et_pass.setError("mật khẩu phải hơn 6 ký tự");
+            Toast.makeText(this, "Mật khẩu phải hơn 6 ký tự", Toast.LENGTH_SHORT).show();
             et_pass.setFocusable(true);
         }else{
+            checkDuplicatePass();
+            pd.setMessage("Tiến hành đăng ký");
+            pd.show();
             fAuth.createUserWithEmailAndPassword(email,pass)
                     .addOnCompleteListener(RegisterActivity.this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+
                     if(task.isSuccessful()){
                         FirebaseUser u = fAuth.getCurrentUser();
                         User user = new User(email,pass,phone);
@@ -90,12 +137,12 @@ public class RegisterActivity extends AppCompatActivity {
                         hashMap.put("phone", user.getPhoneNumber());
 
                         DatabaseReference ref = FirebaseDatabase.getInstance().getReference("user");
-                        ref.child("null").setValue(hashMap)
+                        ref.child(u.getUid()).setValue(hashMap)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
                                        Toast.makeText(RegisterActivity.this, "Thêm user thành công!", Toast.LENGTH_SHORT).show();
-
+                                        pd.dismiss();
                                     }
                                 })
                                 .addOnFailureListener(new OnFailureListener() {

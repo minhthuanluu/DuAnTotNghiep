@@ -28,7 +28,7 @@
             android:background="@drawable/edittext_shape"
             android:padding="15dp"
             android:ems="10"
-            android:inputType="textPersonName"
+            android:inputType="textEmailAddress"
             android:hint="Email" />
 
         <EditText
@@ -39,7 +39,7 @@
             android:background="@drawable/edittext_shape"
             android:padding="10dp"
             android:ems="10"
-            android:inputType="textPassword"
+            android:inputType="phone"
             android:hint="Điện thoại" />
 
         <RelativeLayout
@@ -127,21 +127,6 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:text="Điều khoản"/>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:padding="15dp">
-
-            <ProgressBar
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:layout_marginTop="15dp"
-                android:layout_marginBottom="15dp" />
-        </RelativeLayout>
     </LinearLayout>
 
 </LinearLayout>

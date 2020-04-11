@@ -1,12 +1,40 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragment.PostFragment">
-
+    android:orientation="vertical"
+    tools:context=".fragment.HomeFragment">
+    <LinearLayout
+        android:background="@color/colorPrimary"
+        android:layout_width="match_parent"
+        android:padding="15dp"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:textStyle="bold"
+            android:layout_weight="1"
+            android:textColor="#fff"
+            android:paddingTop="5dp"
+            android:textSize="20dp"
+            android:gravity="center_horizontal"
+            android:text="Thêm Sản Phẩm"
+            android:textAllCaps="true"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:visibility="invisible"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_back"/>
+    </LinearLayout>
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reProduct"
+        android:layout_margin="5dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
-</FrameLayout>
+</LinearLayout>

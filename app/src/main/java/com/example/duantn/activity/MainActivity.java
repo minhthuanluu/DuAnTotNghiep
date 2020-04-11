@@ -5,6 +5,7 @@ import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MenuItem;
 
@@ -37,27 +38,22 @@ public class MainActivity extends AppCompatActivity {
                 public boolean onNavigationItemSelected(@NonNull MenuItem menuItem) {
                     switch (menuItem.getItemId()) {
                         case R.id.nav_home:
-
                             HomeFragment fr = new HomeFragment();
                             FragmentTransaction fr1 = getSupportFragmentManager().beginTransaction();
                             fr1.replace(R.id.content, fr, "");
                             fr1.commit();
                             return true;
                         case R.id.nav_post:
-
-                            PostFragment frU = new PostFragment();
+                            startActivity(new Intent(MainActivity.this,AddProductActivity.class));
+                            return true;
+                        case R.id.nav_chat:
+                            ChatFragment frU = new ChatFragment();
                             FragmentTransaction frTU = getSupportFragmentManager().beginTransaction();
                             frTU.replace(R.id.content, frU, "");
                             frTU.commit();
                             return true;
-                        case R.id.nav_chat:
-                            ChatFragment frC = new ChatFragment();
-                            FragmentTransaction frTC = getSupportFragmentManager().beginTransaction();
-                            frTC.replace(R.id.content, frC, "");
-                            frTC.commit();
-                            return true;
-                        case R.id.nav_profile:
 
+                        case R.id.nav_profile:
                             ProfileFragment frP = new ProfileFragment();
                             FragmentTransaction frTP = getSupportFragmentManager().beginTransaction();
                             frTP.replace(R.id.content, frP, "");

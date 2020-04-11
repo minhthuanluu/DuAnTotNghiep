@@ -31,6 +31,15 @@ public class User {
         this.phoneNumber = phoneNumber;
     }
 
+    public User(String email,String key,String birthday, String indetifyCard, String phone, String address) {
+        this.id = key;
+        this.email = email;
+        this.birthday = birthday;
+        this.indetifyCard = indetifyCard;
+        this.phoneNumber = phone;
+        this.address = address;
+    }
+
     public String getId() {
         return id;
     }

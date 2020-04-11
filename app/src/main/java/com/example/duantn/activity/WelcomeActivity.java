@@ -16,8 +16,6 @@ public class WelcomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_welcome);
-
-
         boolean hasLogin = SharePreferenceUtil.getBooleanPerferences(this, Constant.HAS_LOGIN, false);
 
         if(hasLogin){
@@ -25,7 +23,6 @@ public class WelcomeActivity extends AppCompatActivity {
         }else {
             goToLogin();
         }
-        goToMain();
     }
 
     private void goToLogin() {
@@ -47,4 +44,5 @@ public class WelcomeActivity extends AppCompatActivity {
                 },
                 1000);
     }
+
 }
